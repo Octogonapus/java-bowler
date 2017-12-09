@@ -1,11 +1,7 @@
 package com.neuronrobotics.sdk.addons.kinematics;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import com.neuronrobotics.imageprovider.AbstractImageProvider;
 import com.neuronrobotics.imageprovider.VirtualCameraFactory;
 import com.neuronrobotics.sdk.addons.kinematics.gcodebridge.GcodeDevice;
-import com.neuronrobotics.sdk.addons.kinematics.gcodebridge.GcodePrismatic;
 import com.neuronrobotics.sdk.common.BowlerAbstractDevice;
 import com.neuronrobotics.sdk.common.DeviceManager;
 import com.neuronrobotics.sdk.common.IFlushable;
@@ -16,9 +12,11 @@ import com.neuronrobotics.sdk.dyio.peripherals.CounterOutputChannel;
 import com.neuronrobotics.sdk.dyio.peripherals.ServoChannel;
 import com.neuronrobotics.sdk.namespace.bcs.pid.IExtendedPIDControl;
 import com.neuronrobotics.sdk.namespace.bcs.pid.IPidControlNamespace;
-import com.neuronrobotics.sdk.pid.GenericPIDDevice;
 import com.neuronrobotics.sdk.pid.ILinkFactoryProvider;
 import com.neuronrobotics.sdk.pid.VirtualGenericPIDDevice;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -33,7 +31,10 @@ public class LinkFactory {
 	private ArrayList<AbstractLink> links = new ArrayList<AbstractLink>();
 	
 	/** The link configurations. */
-	private ArrayList<LinkConfiguration> linkConfigurations=null ;
+	private ArrayList<LinkConfiguration> linkConfigurations=null;
+
+	private final static VirtualCameraFactory virtualCameraFactory = new VirtualCameraFactory();
+
 	/**
 	 * Add a new link provider
 	 * 
@@ -226,7 +227,7 @@ public class LinkFactory {
 			String myVirtualDevName1=c.getDeviceScriptingName();
 			AbstractImageProvider img = (AbstractImageProvider)DeviceManager.getSpecificDevice(AbstractImageProvider.class, myVirtualDevName1);
 			if(img==null){
-				img= VirtualCameraFactory.getVirtualCamera();
+				img= virtualCameraFactory.getVirtualCamera();
 				DeviceManager.addConnection(img, myVirtualDevName1);
 			}
 			tmp=new CameraLink(c,img);
