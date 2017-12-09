@@ -4,7 +4,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class VirtualCameraFactory {
-	private static IVirtualCameraFactory factory = new IVirtualCameraFactory() {
+	private IVirtualCameraFactory factory = new IVirtualCameraFactory() {
 		
 		@Override
 		public AbstractImageProvider getVirtualCamera() {
@@ -17,13 +17,13 @@ public class VirtualCameraFactory {
 			}
 		}
 	}; 
-	public static AbstractImageProvider getVirtualCamera(){
+	public AbstractImageProvider getVirtualCamera(){
 		return getFactory().getVirtualCamera();
 	}
-	public static IVirtualCameraFactory getFactory() {
+	public IVirtualCameraFactory getFactory() {
 		return factory;
 	}
-	public static void setFactory(IVirtualCameraFactory factory) {
-		VirtualCameraFactory.factory = factory;
+	public void setFactory(IVirtualCameraFactory factory) {
+		this.factory = factory;
 	}
 }
